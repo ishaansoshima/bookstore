@@ -19,6 +19,8 @@ type OrderItem record {|
 
 // -------------------------
 //        Task 1
+http:Client bookStoreServiceUrl = check new ("localhost:9090");
+
 // -------------------------
 // 1. Create an http client and assign the name "bookStoreClient" to it.
 // 2. Use the "bookStoreServiceUrl" defined at the top to set the service URL of the client.
@@ -28,6 +30,8 @@ type OrderItem record {|
 public function main() returns error? {
     // -------------------------
     //        Task 2
+   http:Client bookStoreClient = check new ("localhost:9090");
+   Book[] catalog = check bookStoreClient->get("/books");
     // -------------------------
     // 1. Use "bookStoreClient" to send a GET request to the "/books" endpoint to get a catalog of all available books.
     // 2. Assign the received response to a variable name "catalog" which is an array of the type "Book"(Book[]).
@@ -53,6 +57,8 @@ public function main() returns error? {
 
     // -------------------------
     //        Task 3
+    http:Response|http:ClientError orderResponse = check bookStoreClient->post(("/orders"),orderItems);
+
     // -------------------------
     // 1. Use "bookStoreClient" to send a POST request to the "/orders" endpoint to create an order.
     // 2. The expected payload is an array of type "OrderItem" defined at the top(OrderItem[]).
